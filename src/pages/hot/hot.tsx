@@ -1,11 +1,9 @@
-/* eslint-disable import/first */
-import { View, Text } from '@tarojs/components';
-import Taro, { useLoad } from '@tarojs/taro';
-import './index.scss';
-import { useEffect, useState } from 'react';
-import { config } from 'webpack';
-import api from '../../utils/api';
 import { IThread } from '@/interfaces/thread';
+import { useEffect, useState } from 'react';
+import Taro, { useLoad } from '@tarojs/taro';
+import api from '@/utils/api';
+import { View, Text } from '@tarojs/components';
+import './index.scss';
 import ThreadList from '@/components/thread_list';
 
 interface IState {
@@ -13,7 +11,7 @@ interface IState {
   threads: IThread[];
 }
 
-export default function Index() {
+export default function Hot() {
   const [state, setState] = useState<IState>({
     loading: true,
     threads: [],
@@ -26,26 +24,27 @@ export default function Index() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Taro.request({
-          url: api.getLatestTopic(),
+        const res = await Taro.request<IThread[]>({
+          url: api.getHotNodes(),
         });
         setState({
           threads: res.data || [],
           loading: false,
-        });
+        } as IState);
       } catch (error) {
         Taro.showToast({
           title: '载入远程数据错误',
         });
       }
     };
-
     fetchData();
-  }, []); // 空依赖数组意味着这个 effect 只在组件挂载时运行
+  });
+
+  const { loading, threads } = state;
 
   return (
     <View className='index'>
-      <ThreadList threads={state.threads} loading={state.loading} />
+      <ThreadList threads={threads} loading={loading} />
     </View>
   );
 }
