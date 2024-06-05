@@ -55,11 +55,15 @@ export default function ThreadDetail() {
             }),
           }),
         ]);
-        setState({
-          loading: false,
-          replies: data,
-          content: prettyHTML(content_rendered),
-        } as IState);
+        setState(
+          (preState) =>
+            ({
+              ...preState,
+              loading: false,
+              replies: data,
+              content: prettyHTML(content_rendered),
+            } as IState)
+        );
       } catch (error) {
         Taro.showToast({
           title: '载入远程数据错误',

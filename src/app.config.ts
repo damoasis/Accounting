@@ -4,7 +4,8 @@ export default defineAppConfig({
     'pages/nodes/nodes',
     'pages/hot/hot',
     'pages/node_detail/node_detail',
-    'pages/thread_detail/thread_detail'
+    'pages/thread_detail/thread_detail',
+    'pages/wx/index',
   ],
   tabBar: {
     list: [{
@@ -22,6 +23,11 @@ export default defineAppConfig({
       'selectedIconPath': 'resource/node_on.png',
       pagePath: 'pages/nodes/nodes',
       text: '节点'
+    }, {
+      'iconPath': 'resource/wx.png',
+      'selectedIconPath': 'resource/wx.png',
+      pagePath: 'pages/wx/index',
+      text: 'wx'
     }],
     'color': '#000',
     'selectedColor': '#56abe4',
